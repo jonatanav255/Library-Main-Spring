@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Book {
@@ -11,15 +14,24 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // @NotBlank(message = "Title is mandatory")
+    // @NotBlank(message = "Title is mandatory")
+    @NotBlank(message = "Title is required")
     private String title;
-    private String author;
-    private String category;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+    
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
     private boolean available;
 
     public Book() {
     }
 
-    public Book(String title, String author, String category, boolean available) {
+    public Book(String title, Author author, Category category, boolean available) {
         this.title = title;
         this.author = author;
         this.category = category;
@@ -42,19 +54,19 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
