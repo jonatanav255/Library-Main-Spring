@@ -1,4 +1,4 @@
-package com.example.library;
+package com.example.library.model;
 
 import java.util.List;
 
@@ -7,9 +7,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 @Entity
-public class Category {
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +18,15 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "category") // One category can include many books
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> books;
 
-    // Constructors
-    public Category() {}
+    // No-args constructor (required by JPA)
+    public Author() {
+    }
 
-    public Category(String name) {
+    // Parameterized constructor
+    public Author(String name) {
         this.name = name;
     }
 

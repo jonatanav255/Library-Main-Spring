@@ -1,4 +1,4 @@
-package com.example.library;
+package com.example.library.Controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.library.Service.BookService;
+import com.example.library.model.Book;
 
 @RestController
 @RequestMapping("/api/books")
