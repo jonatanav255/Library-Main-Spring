@@ -9,10 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 
-
 @Entity
 public class Author {
-       
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +20,15 @@ public class Author {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> books;
+
+    // No-args constructor (required by JPA)
+    public Author() {
+    }
+
+    // Parameterized constructor
+    public Author(String name) {
+        this.name = name;
+    }
 
     // Getters and Setters
     public Long getId() {
