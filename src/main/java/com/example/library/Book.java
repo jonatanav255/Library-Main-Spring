@@ -14,15 +14,13 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    // @NotBlank(message = "Title is mandatory")
-    // @NotBlank(message = "Title is mandatory")
     @NotBlank(message = "Title is required")
     private String title;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
-    
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
