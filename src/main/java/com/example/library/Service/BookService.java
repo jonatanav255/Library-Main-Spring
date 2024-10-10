@@ -1,12 +1,12 @@
-package com.example.library.Service;
+package com.example.library.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.library.Repository.BookRepository;
 import com.example.library.model.Book;
+import com.example.library.repository.BookRepository;
 
 @Service
 public class BookService {
