@@ -14,6 +14,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "Title is required")
     private String title;
 
@@ -24,7 +25,10 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
     private boolean available;
+
+    // Constructors, getters, setters
 
     public Book() {
     }
@@ -36,40 +40,42 @@ public class Book {
         this.available = available;
     }
 
+    // Getters and setters...
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public Author getAuthor() {
         return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 
     public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     public boolean isAvailable() {
         return available;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setAvailable(boolean available) {
