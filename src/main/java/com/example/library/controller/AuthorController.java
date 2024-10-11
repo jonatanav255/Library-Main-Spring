@@ -1,6 +1,6 @@
 package com.example.library.controller;
 
-import com.example.library.model.Author;
+import com.example.library.dto.AuthorDTO;
 import com.example.library.service.AuthorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +18,27 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAllAuthors() {
+    public List<AuthorDTO> getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
+    public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id) {
         return authorService.getAuthorById(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Author addAuthor(@RequestBody Author author) {
-        return authorService.addAuthor(author);
+    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO authorDTO) {
+        AuthorDTO createdAuthor = authorService.addAuthor(authorDTO);
+        return ResponseEntity.status(201).body(createdAuthor);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable Long id, @RequestBody Author authorDetails) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDetails) {
         try {
-            Author updatedAuthor = authorService.updateAuthor(id, authorDetails);
+            AuthorDTO updatedAuthor = authorService.updateAuthor(id, authorDetails);
             return ResponseEntity.ok(updatedAuthor);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

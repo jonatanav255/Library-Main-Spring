@@ -1,6 +1,6 @@
 package com.example.library.controller;
 
-import com.example.library.model.Category;
+import com.example.library.dto.CategoryDTO;
 import com.example.library.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +18,27 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
         return categoryService.getCategoryById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    public ResponseEntity<CategoryDTO> addCategory(@RequestBody CategoryDTO categoryDTO) {
+        CategoryDTO createdCategory = categoryService.addCategory(categoryDTO);
+        return ResponseEntity.status(201).body(createdCategory);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDetails) {
         try {
-            Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
+            CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDetails);
             return ResponseEntity.ok(updatedCategory);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
