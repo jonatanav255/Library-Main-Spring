@@ -1,14 +1,25 @@
 package com.example.library.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class BookDTO {
+
     private Long id;
+    @NotBlank(message = "Book title is required")
     private String title;
+
     private boolean available;
+
+    @NotNull(message = "Author is required")
     private AuthorDTO author;
+
+    @NotNull(message = "Category is required")
     private CategoryDTO category;
 
     // Constructors
-    public BookDTO() {}
+    public BookDTO() {
+    }
 
     public BookDTO(Long id, String title, boolean available, AuthorDTO author, CategoryDTO category) {
         this.id = id;
@@ -19,7 +30,6 @@ public class BookDTO {
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
