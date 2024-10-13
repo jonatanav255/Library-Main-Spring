@@ -1,12 +1,18 @@
 package com.example.library.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CategoryDTO {
+
     private Long id;
+
+    @NotBlank(message = "Category name is required")
     private String name;
     // Do not include 'books' to prevent recursion
 
     // Constructors
-    public CategoryDTO() {}
+    public CategoryDTO() {
+    }
 
     public CategoryDTO(Long id, String name) {
         this.id = id;
@@ -14,7 +20,6 @@ public class CategoryDTO {
     }
 
     // Getters and Setters
-
     public Long getId() {
         return id;
     }
