@@ -1,7 +1,11 @@
 package com.example.library.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AuthorDTO {
     private Long id;
+
+    @NotBlank(message = "Author name is required")
     private String name;
     // Do not include 'books' to prevent recursion
 

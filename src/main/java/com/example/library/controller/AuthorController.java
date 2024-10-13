@@ -2,13 +2,18 @@ package com.example.library.controller;
 
 import com.example.library.dto.AuthorDTO;
 import com.example.library.service.AuthorService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/authors")
+@Validated
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -30,13 +35,13 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<AuthorDTO> addAuthor(@RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity<AuthorDTO> addAuthor(@Valid @RequestBody AuthorDTO authorDTO) {
         AuthorDTO createdAuthor = authorService.addAuthor(authorDTO);
         return ResponseEntity.status(201).body(createdAuthor);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @RequestBody AuthorDTO authorDetails) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable Long id, @Valid @RequestBody AuthorDTO authorDetails) {
         try {
             AuthorDTO updatedAuthor = authorService.updateAuthor(id, authorDetails);
             return ResponseEntity.ok(updatedAuthor);
