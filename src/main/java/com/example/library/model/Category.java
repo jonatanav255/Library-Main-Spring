@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Category {
@@ -15,13 +16,13 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Category name is required")
     private String name;
 
     @OneToMany(mappedBy = "category")
     private List<Book> books;
 
     // Constructors, getters, setters
-
     public Category() {
     }
 
@@ -30,7 +31,6 @@ public class Category {
     }
 
     // Getters and setters...
-
     public Long getId() {
         return id;
     }
