@@ -26,17 +26,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Enable CORS and disable CSRF for stateless APIs
         http
-            .cors(withDefaults()) // Enable CORS
-            .csrf(csrf -> csrf.disable()) // Disable CSRF
+            .cors(withDefaults())
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/public/**").permitAll() // Allow public access
-                .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN") // Restrict DELETE endpoints to ADMIN role
-                .anyRequest().authenticated() // All other requests need authentication
+                .requestMatchers("/public/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
             )
-            .formLogin(withDefaults()) // Default form-based login
-            .httpBasic(withDefaults()); // Enable HTTP Basic Authentication
+            .formLogin(withDefaults())
+            .httpBasic(withDefaults());
 
         return http.build();
     }
@@ -53,7 +52,7 @@ public class SecurityConfig {
         UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder.encode("adminpassword"))
-            .roles("ADMIN")
+            .roles("ADMIN", "USER")
             .build();
 
         return new InMemoryUserDetailsManager(user, admin);
@@ -61,21 +60,20 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Use BCrypt for encoding passwords
         return new BCryptPasswordEncoder();
     }
 
-    // Define a global CORS configuration bean
+    // Use corsConfigurationSource instead of CorsFilter
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Allow the frontend origin
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Apply CORS settings to all routes
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 }
