@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
+import jakarta.persistence.CascadeType;
+
 @Entity
 public class Category {
 
@@ -19,7 +21,8 @@ public class Category {
     @NotBlank(message = "Category name is required")
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    // @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Book> books;
 
     // Constructors, getters, setters
