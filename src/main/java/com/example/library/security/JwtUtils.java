@@ -1,4 +1,3 @@
-// 1
 package com.example.library.security;
 
 import io.jsonwebtoken.ExpiredJwtException;
